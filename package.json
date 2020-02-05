@@ -1,0 +1,41 @@
+{
+  "name": "hangman-js",
+  "version": "1.0.0",
+  "description": "Simple hangman game written in Javascript and built using webpack.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack -p",
+    "dev": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DamonSweeney/javascript_hangman_dev.git"
+  },
+  "author": "Damon M. Sweeney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DamonSweeney/hangman-js/issues"
+  },
+  "homepage": "https://github.com/DamonSweeney/hangman-js#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "normalize.css": "^8.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "favicons-webpack-plugin": "=2.1.0",
+    "file-loader": "^5.0.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  }
+}

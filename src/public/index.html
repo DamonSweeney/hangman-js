@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hangman JS</title>
+        <link rel="icon" type="image/png" href="">
+        <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,500,600,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="description" content="A simple hangman web application built with Javascript.">
+        <meta name="keywords" content="Game, Javascript, Hangman, Interactive">
+        <meta name="author" content="Damon Sweeney">
+    </head>
+
+    <body>
+        <section id="menu">
+            <p id="game-title">Hangman JS</p>
+            <div id="select-word">
+                <input type="password" id="word-field" max-length="32" placeholder="Enter the word or phrase to be guessed.." pattern="[A-Z0-9-' ]{1,32}">
+                <span id="vis"><i class="fas fa-eye"></i></span>
+            </div>
+            <div id="select-lives">
+                <div id="lives-label">Select the number of lives..</div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-2" value="2"><label for="rb-2">2</label></div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-4" value="4"><label for="rb-4">4</label></div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-6" value="6" checked="checked"/><label for="rb-6">6</label></div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-8" value="8"><label for="rb-8">8</label></div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-10" value="10"><label for="rb-10">10</label></div>
+                <div class="rb-pair"><input type="radio" name="lives" id="rb-12" value="12"><label for="rb-12">12</label></div>
+            </div>
+            <button id="start-game"><i class="fas fa-play"></i></button>
+        </section>
+
+
+        <section id="over">
+            <p id="winning-state"></p>
+            <p id="word-label">The answer was</p>
+            <p id="word-answer"></p>
+            <button id="restart-game"><i class="fas fa-redo-alt"></i></button>
+        </section>
+
+
+        <section id="game">
+            <!-- Player card -->
+            <div id="player-card">
+                <div id="lives">
+                    <span id="held"></span>
+                    <span id="max"></span>
+                </div>
+
+                <div id="guess-container">
+                    <div>Guesses</div>
+                    <div id="guesses"></div>
+                </div>
+
+                <div id="user-input">
+                    <div class="field">
+                        <input type="text" id="guess-field" max-length="32">
+                        <button id="guess-submit"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hangman drawing / word to guess -->
+            <div id="hangman">
+                <div id="anim-stage">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 640">
+                        <defs>
+                            <path d="M214.9 9.39L229.9 9.39L229.9 614.25L214.9 614.25L214.9 9.39Z" id="main-bar"></path>
+                            <path d="M94.82 610.53L541.92 610.53L541.92 625.53L94.82 625.53L94.82 610.53Z" id="base-bar"></path>
+                            <path d="M197.33 26.32L510.01 26.32L510.01 41.32L197.33 41.32L197.33 26.32Z" id="top-bar"></path>
+                            <path d="M423.98 40.88L438.98 40.88L438.98 55.88L423.98 55.88L423.98 40.88Z" id="rope-connector"></path>
+                            <path d="M333.05 5.52L343.66 16.13L205.16 154.6L194.55 144L333.05 5.52Z" id="support-bar"></path>
+                            <path d="M442.51 252.17L436.51 252.17L436.51 402.17L442.51 402.17L442.51 252.17Z" id="torso"></path>
+                            <path d="M441.33 255.56L435.42 255.04L383.33 402.76L389.24 403.28L441.33 255.56Z" id="left-arm"></path>
+                            <path d="M442.45 401.04L436.54 401.56L488.63 549.28L494.54 548.76L442.45 401.04Z" id="right-leg"></path>
+                            <path d="M442.45 252.71L436.54 253.23L488.63 400.95L494.54 400.43L442.45 252.71Z" id="right-arm"></path>
+                            <path d="M428.53 40.41L434.46 40.41L434.46 197.04L428.53 197.04L428.53 40.41Z" id="rope"></path>
+                            <path d="M442.83 399.24L436.9 399.24L397.98 550.97L403.92 550.97L442.83 399.24Z" id="left-leg"></path>
+                            <path d="M429.07 184.66C421.8 216.21 429.13 251.37 453.44 263.13C477.74 274.89 509.86 258.83 525.13 227.28C540.4 195.74 533.06 160.58 508.76 148.81C484.46 137.05 452.33 153.12 437.07 184.66Z" id="head"></path>
+                        </defs>
+                        <g>
+                            <g>
+                                <!-- Vertical pole -->
+                                <g><use xlink:href="#main-bar" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Platform floor -->
+                                <g><use xlink:href="#base-bar" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Top bar -->
+                                <g><use xlink:href="#top-bar" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Rope holder -->
+                                <g><use xlink:href="#rope-connector" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Diagonal support bar -->
+                                <g><use xlink:href="#support-bar" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Main torso -->
+                                <g><use xlink:href="#torso" opacity="1" fill="#f3f3f3" fill-opacity="0"></use></g>
+                                <!-- Left arm -->
+                                <g><use xlink:href="#left-arm" opacity="1" fill="#f3f3f3" fill-opacity="0"></use></g>
+                                <!-- Right Leg -->
+                                <g><use xlink:href="#right-leg" opacity="1" fill="#f3f3f3" fill-opacity="0"></use></g>
+                                <!-- Right Arm -->
+                                <g><use xlink:href="#right-arm" opacity="1" fill="#f3f3f3" fill-opacity="0"></use></g>
+                                <!-- Rope -->
+                                <g><use xlink:href="#rope" opacity="1" fill="#e1e1e1" fill-opacity="0"></use></g>
+                                <!-- Left Leg -->
+                                <g><use xlink:href="#left-leg" opacity="1" fill="#f3f3f3" fill-opacity="0"></use></g>
+                                <!-- Head -->
+                                <g><use xlink:href="#head" opacity="1" fill="#f3f3f3" fill-opacity="0" stroke="#f3f3f3" stroke-width="0" stroke-opacity="0.05"></use></g>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+                <div id="answer-boxes"></div>
+            </div>
+        </section>
+
+        <div id="github-logo">
+            <a href="https://github.com/DamonSweeney/hangman-js">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+
+
+    </body>
+</html>
