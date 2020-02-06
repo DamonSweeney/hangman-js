@@ -1,6 +1,8 @@
 # Hangman JS
 Simple hangman game written in Javascript and built using webpack.
 
+Demo available at: [dev.damons.site](http://dev.damons.site)
+
 ## Getting Started
 
 To get this project up and running follow the below steps.
