@@ -1,4 +1,4 @@
-# Hangman JS
+# Hangman JS [WIP]
 Simple hangman game written in Javascript and built using webpack.
 
 Demo available at: [dev.damons.site](http://dev.damons.site)
