@@ -12,9 +12,8 @@ class HangmanUI {
         let menu = document.getElementById('menu')
         let game = document.getElementById('game')
         let over = document.getElementById('over')
-
-        this._states = [menu, game, over]
-        this.activateState(this._states[0])
+        this._states = {"menu": menu, "game": game, "over": over}
+        this.activateState(menu)
 
         this._word      = null
         this._game      = null
@@ -32,30 +31,37 @@ class HangmanUI {
      * - gameover -> menu
      */
     nextUIState() {
-        if (this._activeState == menu) {
+        if (this._activeState == this._states['menu']) {
             this.setupGame()
-            this.activateState(game)
+            this.activateState(this._states['game'])
             return
         }
-        if (this._activeState == game) {
-            this.activateState(over)
+        if (this._activeState == this._states['game']) {
+            this.hideGameUI()
+            setTimeout(() => {this.activateState(this._states['over'])}, 2500)
             return
         }
-        if (this._activeState == over) {
+        if (this._activeState == this._states['over']) {
             location.reload(true);
             return
         }
     }
 
+    /**
+     * Cover UI with overlay.
+     */
+    hideGameUI() {
+        document.getElementById('player-card').style.opacity = 0.2;
+    }
 
     /**
      * Activate the provided UI state.
      * @param {Element} newState - The state to be set to active.
      */
     activateState(newState) {
-        this._states.forEach(state => {
-            state.style.display =  'none'
-        })
+        for (const [name, state] of Object.entries(this._states)) {
+            state.style.display = 'none'
+        }
 
         newState.style.display = 'flex'
         this._activeState = newState

@@ -54,16 +54,19 @@ class AnswerBoxes {
      * Draw the given character or word onto the corresponding answer boxes.
      */
     drawAnswer(word) {
-        let count = 0
-        let answerBoxes = this._container.children
+        for (const char of word) {
 
-        for (const child of answerBoxes) {
-            for (const elem of child.children) {
-                let v = this._answer.charAt(count)
-                if (v == word) {
-                    elem.innerText = word.toUpperCase()
+            let count = 0
+            let answerBoxes = this._container.children
+
+            for (const child of answerBoxes) {
+                for (const elem of child.children) {
+                    let v = this._answer.charAt(count)
+                    if (v == char) {
+                        elem.innerText = char.toUpperCase()
+                    }
+                    count++
                 }
-                count++
             }
         }
     }

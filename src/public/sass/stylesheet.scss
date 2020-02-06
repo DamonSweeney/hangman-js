@@ -32,6 +32,8 @@ body {
     height: 100%;
     width: 100%;
     display: none;
+    justify-content: center;
+    transition: 0.5s ease-in;
 }
 
 #github-logo {
@@ -63,6 +65,7 @@ body {
     border-right: 3px solid rgba(255, 255, 255, 0.5);
     border-radius: 3px;
     height: 100%;
+    transition: 1s ease-in;
 
     #lives {
         padding-top: 50px;
@@ -136,10 +139,12 @@ body {
                 &.correct {
                     color: rgb(73, 214, 85);
                     text-decoration: underline;
+                    transform: scale(1.05);
                 }
 
                 &.incorrect {
                     color: rgb(253, 93, 93);
+                    text-decoration: underline;
                 }
             }
         }
@@ -555,7 +560,7 @@ body {
  * ----------------------------------------
  */
  @keyframes pulse {
-    0% { fill-opacity: 0; }
-    50% { fill-opacity: 0.065; }
+    0%   { fill-opacity: 0; }
+    50%  { fill-opacity: 0.065; }
     100% { fill-opacity: 0; }
 }
