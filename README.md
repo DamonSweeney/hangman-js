@@ -5,8 +5,6 @@ Demo available at: [damons.site/hangman](https://damons.site/hangman)
 
 ## Getting Started
 
-To get this project up and running follow the below steps.
-
 ### Prerequisites
 
 - Node
